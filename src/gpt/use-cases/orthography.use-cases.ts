@@ -39,9 +39,16 @@ export const orthographyCheckUseCase = async (
     model: 'gpt-3.5-turbo',
     temperature: 0.3,
     max_tokens: 150,
+
+    //response_format não é suportado no gpt-4
+    //Então as duas linhas abaixo devem ser retiradas quando usar gpt-4
+    response_format: {
+      type: 'json_object',
+    },
   });
 
-  console.log(completion);
+  // console.log(completion);
+  const jsonResp = JSON.parse(completion.choices[0].message.content);
 
-  return completion.choices[0];
+  return jsonResp;
 };
